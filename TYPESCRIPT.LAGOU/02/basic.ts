@@ -1,25 +1,24 @@
 /*
- * @Descripttion : 
+ * @Descripttion : 原始类型
  * @Author       : zhangming
  * @Date         : 2021-06-03 15:06:30
  * @LastEditors  : zhangming
- * @LastEditTime : 2021-06-07 14:16:28
+ * @LastEditTime : 2021-06-07 19:42:55
  */
 
+// primative
+// string number boolean symbol undefined null bigInt
 
-// primative 
-// string number boolean symbol undefined null bigInt 
-
-let num:number = 1
-let integer2: number = Number(42);
-let decimal: number = 3.14;
+let num: number = 1
+let integer2: number = Number(42)
+let decimal: number = 3.14
 /** 二进制整数 */
-let binary: number = 0b1010;
+let binary: number = 0b1010
 /** 八进制整数 */
-let octal: number = 0o744;
+let octal: number = 0o744
 /** 十六进制整数 */
-let hex: number = 0xf00d;
-let big: bigint =  100n;
+let hex: number = 0xf00d
+let big: bigint = 100n
 
 //特殊说明：请你千万别将它们和小写格式对应的 number、string、boolean、symbol 进行等价。
 
