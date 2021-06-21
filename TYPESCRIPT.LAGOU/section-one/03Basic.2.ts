@@ -3,7 +3,7 @@
  * @Author       : zhangming
  * @Date         : 2021-06-07 19:42:35
  * @LastEditors  : zhangming
- * @LastEditTime : 2021-06-08 17:19:06
+ * @LastEditTime : 2021-06-18 09:50:55
  */
 
 // Array
@@ -29,6 +29,9 @@
 // Tuple
 //元组最重要的特性是可以限制数组元素的个数和类型，它特别适合用来实现多值返回
 
+// 我们知道数组中元素的数据类型都一般是相同的（any[] 类型的数组可以不同），如果存储的元素数据类型不同，则需要使用元组。
+// 元组中允许存储不同类型的元素，元组可以作为参数传递给函数。
+
 //  Any is Hell（Any 是地狱）
 
 //  unknown
@@ -36,14 +39,14 @@
 
 {
   let result: unknown
-  //   let num: number = result // 提示 ts(2322)
+  // let num: number = result // 提示 ts(2322)
   let anything: any = result // 不会提示错误
 }
 
 //使用 unknown 后，TypeScript 会对它做类型检测。但是，如果不缩小类型（Type Narrowing），我们对 unknown 执行的任何操作都会出现如下所示错误：
 {
   let result: unknown
-  //   result.toFixed() // 提示 ts(2571)
+  // result.toFixed() // 提示 ts(2571)
 }
 
 //类型缩小等同拦截
@@ -56,7 +59,7 @@
 
 {
   let b = { a: 1, c: 3 } as const
-  //   b.a = 3
+  // b.a = 3
 }
 
 //undefined 的最大价值主要体现在接口类型（第 7 讲会涉及）上，它表示一个可缺省、未定义的属性
@@ -68,7 +71,7 @@
   let undeclared: undefined = undefined
   let unusable: void = undefined
   unusable = undeclared // ok
-  //   undeclared = unusable // ts(2322)
+  // undeclared = unusable // ts(2322)
 }
 
 // 而 null 的价值我认为主要体现在接口制定上，它表明对象或属性可能是空值。
@@ -76,6 +79,19 @@
   const userInfo: {
     name: null | string
   } = { name: null }
+}
+
+// 类型断言（Type Assertion）
+// 如果我们把它换成“指白马为马”“指马为白马”，就可以很贴切地体现类型断言的约束条件：父子、子父类型之间可以使用类型断言进行转换。
+{
+  const arrayNumber: number[] = [1, 2, 3, 4]
+  // const greaterThan2: number = arrayNumber.find(num => num > 2); // 提示 ts(2322)
+
+  //在 TypeScript 看来，greaterThan2 的类型既可能是数字，也可能是 undefined，所以上面的示例中提示了一个 ts(2322) 错误，此时我们不能把类型 undefined 分配给类型 number。
+  // 使用 as 语法做类型断言
+  // 使用尖括号 + 类型的格式做类型断言
+  const greaterThan2: number = arrayNumber.find((num) => num > 2) as number
+  const greaterThan3: number = <number>arrayNumber.find((num) => num > 3)
 }
 
 //我们需要类型守卫（Type Guard，第 11 讲会专门讲解）在操作之前判断值的类型是否支持当前的操作。类型守卫既能通过类型缩小影响 TypeScript 的类型检测，也能保障 JavaScript 运行时的安全性
@@ -89,7 +105,7 @@
     // Type Guard
     userInfo.id.toFixed() // id 的类型缩小成 number
   }
-  //非空断言
+  //非空断言 !危险操作
 
   userInfo.id!.toFixed() // ok，但不建议
   userInfo.name!.toLowerCase() // ok，但不建议
