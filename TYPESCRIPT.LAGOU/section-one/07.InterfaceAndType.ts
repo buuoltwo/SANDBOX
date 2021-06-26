@@ -74,6 +74,9 @@ type StudyLanguageType = (language: ProgramLanguage) => void
 // -> 使用索引签名来定义上边提到的对象映射结构，并通过 “[索引名: 类型]”的格式约束索引的类型。
 // -> 索引名称的类型分为 string 和 number 两种
 
+// 并通过 “[索引名: 类型]”的格式约束索引的类型。
+// 并通过 “[索引名: 类型]”的格式约束索引的类型。
+// 并通过 “[索引名: 类型]”的格式约束索引的类型。
 {
   interface LanguageRankInterface {
     [rank: number]: string
@@ -84,12 +87,39 @@ type StudyLanguageType = (language: ProgramLanguage) => void
   let LanguageRankMap: LanguageRankInterface = {
     1: 'TypeScript', // ok
     2: 'JavaScript', // ok
-    WrongINdex: '2012', // ts(2322) 不存在的属性名
+    // WrongINdex: '2012', // ts(2322) 不存在的属性名
   }
 
+  // 数字作为对象索引时，它的类型既可以与数字兼容，也可以与字符串兼容，这与 JavaScript 的行为一致。
+  // 因此，使用 0 或 '0' 索引对象时，这两者等价。
   let LanguageMap: LanguageYearInterface = {
     TypeScript: 2012, // ok
     JavaScript: 1995, // ok
     1: 1970, // ok
+  }
+}
+
+
+{
+  interface DynamicLanguage extends ProgramLanguage {
+    rank: number; // 定义新属性
+  }
+  
+  interface TypeSafeLanguage extends ProgramLanguage {
+    typeChecker: string; // 定义新的属性
+  }
+  /** 继承多个 */
+  interface TypeScriptLanguage extends DynamicLanguage, TypeSafeLanguage {
+    name: '284r1i23ji3r'; // 用原属性类型的兼容的类型(比如子集)重新定义属性
+  }
+
+  // 多方继承而来,必须要填的属性有>>
+  let child : TypeScriptLanguage = {
+    name:'284r1i23ji3r',
+    rank:100,
+    typeChecker:`do you have any idea`,
+    age(){
+      return 100
+    }
   }
 }
